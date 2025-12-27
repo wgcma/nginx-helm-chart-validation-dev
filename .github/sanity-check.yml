@@ -1,0 +1,29 @@
+name: Helm Chart Validation
+on: [push, pull_request]
+
+jobs:
+  validate-chart:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out your code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Helm on the runner
+      # Use Community supported version instead of Azure
+      - name: Set up Helm
+        uses: helm/chart-testing-action@v2.6.1
+        with:
+          repository: wgcma/nginx-helm-dev
+          path: infra
+
+      # 3. Run the Lint command
+      # Replace 'charts/my-app' with the path to your chart folder
+      - name: Lint Helm Chart
+        run: |
+          helm lint ./infra
+
+      # 4. "Hello World" - Dry run to see if it renders
+      - name: Test Template Rendering
+        run: |
+          helm template test-release-${{ github.run_id }} ./infra --debug
