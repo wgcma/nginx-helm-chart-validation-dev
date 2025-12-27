@@ -8,14 +8,13 @@ jobs:
       # 1. Check out your code
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # 2. Install Helm on the runner
-      # Use Community supported version instead of Azure
-      - name: Set up Helm
-        uses: helm/chart-testing-action@v2.6.1
         with:
           repository: wgcma/nginx-helm-dev
           path: infra
+
+      # 2. Install Helm on runner
+      - name: Set up Chart Testing
+        uses: helm/chart-testing-action@v2.6.1
 
       # 3. Run the Lint command
       # Replace 'charts/my-app' with the path to your chart folder
