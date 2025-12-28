@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: wgcma/nginx-helm-dev
-          path: infra
+          path: ws
 
       # 2. Install Helm on runner
       - name: Set up Chart Testing
@@ -20,7 +20,7 @@ jobs:
       # Replace 'charts/my-app' with the path to your chart folder
       - name: Lint Helm Chart
         run: |
-          helm lint ./infra
+          helm lint ./ws/infra
 
       # 4. "Hello World" - Dry run to see if it renders
       - name: Test Template Rendering
