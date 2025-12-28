@@ -27,6 +27,11 @@ jobs:
         run: |
           helm template test-release-${{ github.run_id }} ./ws/infra --debug
 
+      - name: Run Helm Unit Tests
+        uses: quintush/helm-unittest@v3
+        with:
+          chart: ./ws/infra
+
       - name: Setup Kubeconform
         run: |
           wget https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
