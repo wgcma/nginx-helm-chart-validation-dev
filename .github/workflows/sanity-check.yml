@@ -25,4 +25,4 @@ jobs:
       # 4. "Hello World" - Dry run to see if it renders
       - name: Test Template Rendering
         run: |
-          helm template test-release-${{ github.run_id }} ./infra --debug
+          helm template test-release-${{ github.run_id }} ./ws/infra --debug
