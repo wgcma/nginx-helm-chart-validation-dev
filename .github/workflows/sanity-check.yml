@@ -28,7 +28,7 @@ jobs:
           helm template test-release-${{ github.run_id }} ./ws/infra --debug
 
       - name: Run Helm Unit Tests
-        uses: quintush/helm-unittest@v3
+        uses: quintush/helm-unittest@v3.11.3
         with:
           chart: ./ws/infra
 
