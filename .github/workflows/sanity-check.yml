@@ -26,3 +26,17 @@ jobs:
       - name: Test Template Rendering
         run: |
           helm template test-release-${{ github.run_id }} ./ws/infra --debug
+
+      - name: Setup Kubeconform
+        run: |
+          wget https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xf kubeconform-linux-amd64.tar.gz
+          sudo cp kubeconform /usr/local/bin
+
+      - name: Validate with Kubeconform
+        run: |
+          # 1. 'helm template' generates the YAML
+          # 2. '|' (the pipe) sends that YAML to kubeconform
+          # 3. '-summary' gives a nice output of what passed/failed
+          # 4. '-strict' ensures no unknown fields are allowed
+          helm template my-test-release ./infra/infra | kubeconform -summary -strict
