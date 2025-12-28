@@ -27,11 +27,13 @@ jobs:
         run: |
           helm template test-release-${{ github.run_id }} ./ws/infra --debug
 
+      - name: Install Helm Unittest Plugin
+        run: |
+          helm plugin install https://github.com/helm-unittest/helm-unittest.git
+
       - name: Run Helm Unit Tests
-        # Changed from quintush/helm-unittest to helm-unittest/helm-unittest
-        uses: helm-unittest/helm-unittest@v1
-        with:
-          chart: ./ws/infra
+        run: |
+          helm unittest ./ws/infra
 
       - name: Setup Kubeconform
         run: |
